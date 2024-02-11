@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Chatbot with ollama reading PDFs",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node index.js"
   },
   "keywords": [
     "ollama",
@@ -16,8 +17,10 @@
   "license": "MIT",
   "dependencies": {
     "@langchain/community": "^0.0.27",
+    "@visheratin/web-ai-node": "^1.4.5",
     "@xenova/transformers": "^2.15.0",
     "autoprefixer": "^10.4.17",
+    "chromadb": "^1.8.1",
     "encoding": "^0.1.13",
     "langchain": "^0.1.17",
     "pdf-parse": "^1.1.1",
