@@ -13,5 +13,14 @@
     "server"
   ],
   "author": "Cristina Avila",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/community": "^0.0.27",
+    "@xenova/transformers": "^2.15.0",
+    "autoprefixer": "^10.4.17",
+    "encoding": "^0.1.13",
+    "langchain": "^0.1.17",
+    "pdf-parse": "^1.1.1",
+    "voy-search": "^0.6.3"
+  }
 }
