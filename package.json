@@ -1,0 +1,17 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "Chatbot with ollama reading PDFs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ollama",
+    "chatbot",
+    "pdf",
+    "server"
+  ],
+  "author": "Cristina Avila",
+  "license": "MIT"
+}
