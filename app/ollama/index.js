@@ -1,4 +1,5 @@
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import { WebPDFLoader } from "langchain/document_loaders/web/pdf";
@@ -19,6 +20,26 @@ import {
 import { ollamaURL, ollamaModel, RESPONSE_SYSTEM_TEMPLATE } from "./constants.js";
 import { readPDF } from "./file.js";
 
+
+function getEmbeddings(provider) {
+    if (provider === "openai") {
+        const openaiEmbeddings = new OpenAIEmbeddings({
+            openAIApiKey: process.env.OPENAI_API_KEY, // In Node.js defaults to process.env.OPENAI_API_KEY
+            batchSize: 512, // Default value if omitted is 512. Max is 2048
+            modelName: "text-embedding-3-large",
+        });
+
+        return openaiEmbeddings;
+    }
+
+    const embeddingsHF = new HuggingFaceTransformersEmbeddings({
+        modelName: "nomic-ai/nomic-embed-text-v1",
+        // Can use "Xenova/all-MiniLM-L6-v2" for less powerful but faster embeddings
+    });
+
+    return embeddingsHF;
+}
+
 async function initializeVectorWithPDF(pdfPath) {
     const blob = await readPDF(pdfPath);
     const pdfLoader = new WebPDFLoader(blob, { parsedItemSeparator: " " });
@@ -28,11 +49,9 @@ async function initializeVectorWithPDF(pdfPath) {
         chunkOverlap: 50,
     });
     const splitDocs = await splitter.splitDocuments(docs);
-    const embeddingsHF = new HuggingFaceTransformersEmbeddings({
-        modelName: "nomic-ai/nomic-embed-text-v1",
-        // Can use "Xenova/all-MiniLM-L6-v2" for less powerful but faster embeddings
-    });
-    const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddingsHF).catch(console.log);
+
+    const embeddings = getEmbeddings("openai");
+    const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings).catch(console.log);
     return vectorStore;
 }
 

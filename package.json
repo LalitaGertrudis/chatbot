@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@langchain/community": "^0.0.27",
+    "@langchain/openai": "^0.0.14",
     "@visheratin/web-ai-node": "^1.4.5",
     "@xenova/transformers": "^2.15.0",
     "autoprefixer": "^10.4.17",
