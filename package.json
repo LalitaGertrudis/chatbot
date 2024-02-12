@@ -2,10 +2,10 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "Chatbot with ollama reading PDFs",
-  "main": "index.js",
+  "main": "./app/index.js",
   "type": "module",
   "scripts": {
-    "run": "node index.js"
+    "watch": "node ./app/index.js"
   },
   "keywords": [
     "ollama",
@@ -20,10 +20,18 @@
     "@visheratin/web-ai-node": "^1.4.5",
     "@xenova/transformers": "^2.15.0",
     "autoprefixer": "^10.4.17",
+    "body-parser": "^1.20.2",
     "chromadb": "^1.8.1",
+    "dotenv": "^16.4.2",
     "encoding": "^0.1.13",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "langchain": "^0.1.17",
     "pdf-parse": "^1.1.1",
-    "voy-search": "^0.6.3"
+    "pino": "^8.18.0",
+    "pino-http": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
