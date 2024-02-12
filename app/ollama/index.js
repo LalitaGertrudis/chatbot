@@ -20,7 +20,6 @@ import {
 import { ollamaURL, ollamaModel, RESPONSE_SYSTEM_TEMPLATE } from "./constants.js";
 import { readPDF } from "./file.js";
 
-
 function getEmbeddings(provider) {
     if (provider === "openai") {
         const openaiEmbeddings = new OpenAIEmbeddings({
@@ -40,6 +39,12 @@ function getEmbeddings(provider) {
     return embeddingsHF;
 }
 
+async function getVectorStore(embeddingProvider, docs) {
+    const embeddings = getEmbeddings(embeddingProvider);
+    const vectorStore = await MemoryVectorStore.fromDocuments(docs, embeddings);
+    return vectorStore;
+}
+
 async function initializeVectorWithPDF(pdfPath) {
     const blob = await readPDF(pdfPath);
     const pdfLoader = new WebPDFLoader(blob, { parsedItemSeparator: " " });
@@ -49,9 +54,7 @@ async function initializeVectorWithPDF(pdfPath) {
         chunkOverlap: 50,
     });
     const splitDocs = await splitter.splitDocuments(docs);
-
-    const embeddings = getEmbeddings("openai");
-    const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings).catch(console.log);
+    const vectorStore = await getVectorStore("openai", splitDocs);
     return vectorStore;
 }
 
